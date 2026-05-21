@@ -234,7 +234,7 @@ html, body {
 
 /* ============ SLIDE BACKGROUNDS ============ */
 .slide-bg-cream {
-  background: #fdfbf7;
+  background: #fbf6f2;
 }
 .slide-bg-cream::before {
   content: '';
@@ -255,7 +255,7 @@ html, body {
 }
 
 .slide-bg-dark {
-  background: linear-gradient(135deg, #004687 0%, #002244 100%);
+  background: #fbf6f2;
 }
 
 /* ============ NAVIGATION BUTTONS ============ */
@@ -329,7 +329,7 @@ h4 { font-size: 20px; font-weight: 600; }
 .slide-bg-dark h1,
 .slide-bg-dark h2,
 .slide-bg-dark h3 {
-  color: #FFD000;
+  color: #004687;
 }
 
 p, li, td, th {
@@ -343,7 +343,7 @@ p, li, td, th {
 .slide-bg-dark li,
 .slide-bg-dark td,
 .slide-bg-dark th {
-  color: #e2e8f0;
+  color: #2d3748;
 }
 
 .slide-title {
@@ -374,7 +374,7 @@ p, li, td, th {
 }
 
 .slide-bg-dark .slide-title::after {
-  background-color: #fff;
+  background-color: #FFD000;
 }
 
 .title-layout {
@@ -408,6 +408,89 @@ p, li, td, th {
   grid-template-columns: 1.1fr 0.9fr;
   gap: 40px;
   align-items: center;
+}
+
+/* ============ AUDIENCE CARDS (Slide 5) ============ */
+.audience-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 8px 30px rgba(0,70,135,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.audience-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0,70,135,0.12);
+}
+.audience-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.audience-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.audience-label {
+  display: inline-block;
+  background: #FFD000;
+  color: #004687;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+.audience-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #004687;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.audience-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.audience-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0ebe4;
+  font-size: 17px;
+  color: #2d3748;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
+}
+.audience-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.audience-list li:first-child {
+  padding-top: 0;
+}
+.check-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #004687;
+  color: #FFD000;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  flex-shrink: 0;
+  margin-top: 1px;
 }
 
 .tile {
@@ -582,7 +665,7 @@ p, li, td, th {
         <!-- SLIDE 1: PORTADA -->
         <div class="slide slide-bg-cream active" data-index="0">
             <div class="slide-content title-layout">
-                <img src="logo.jpeg" class="logo-main pop-in-scale" data-delay="1" alt="Logo Benteveo">
+                <img src="logo-app.png" class="logo-main pop-in-scale" data-delay="1" alt="Logo Benteveo">
                 <span class="accent-badge pop-in" data-delay="2">Plataforma P2P Líder</span>
                 <h1 class="pop-in" data-delay="3" style="font-size: clamp(48px, 6vw, 64px); font-weight: 800;">Benteveo</h1>
                 <p class="subtitle pop-in" data-delay="4" style="font-size: clamp(28px, 4vw, 38px); font-weight: 700; color: #FFD000; font-family: 'Space Grotesk', sans-serif;">"Te hace la gauchada"</p>
@@ -616,7 +699,7 @@ p, li, td, th {
                 <h2 class="slide-title pop-in" data-delay="1">El Problema: Capital Dormido</h2>
                 <div class="two-column">
                     <div class="image-wrapper pop-in-left" data-delay="2">
-                        <img src="garage.jpg" alt="Garage con herramientas">
+                        <img src="herramientas.webp" alt="Herramientas guardadas sin uso">
                     </div>
                     <div>
                         <ul style="list-style: none;">
@@ -659,14 +742,42 @@ p, li, td, th {
         <div class="slide slide-bg-cream" data-index="4">
             <div class="slide-content">
                 <h2 class="slide-title pop-in" data-delay="1">¿A quién está destinado?</h2>
-                <div class="two-column" style="grid-template-columns: 1fr 1fr;">
-                    <div class="tile pop-in-left" data-delay="2" style="border-top-color: #FFD000;">
-                        <h3><i class="fa-solid fa-user-gear"></i> El Inquilino</h3>
-                        <p>Estudiantes o profesionales que necesitan solucionar una necesidad puntual sin comprar el bien.</p>
+                <div class="two-column audience-grid" style="grid-template-columns: 1fr 1fr;">
+                    <!-- LADO A -->
+                    <div class="audience-card pop-in-left" data-delay="2" style="border-left: 6px solid #FFD000;">
+                        <div class="audience-header">
+                            <div class="audience-icon" style="background: #FFD000; color: #004687;">
+                                <i class="fa-solid fa-key"></i>
+                            </div>
+                            <div>
+                                <span class="audience-label">Lado A</span>
+                                <h3 class="audience-name">Dueños (Oferta)</h3>
+                            </div>
+                        </div>
+                        <ul class="audience-list">
+                            <li><span class="check-circle"><i class="fa-solid fa-check"></i></span> Personas comunes</li>
+                            <li><span class="check-circle"><i class="fa-solid fa-check"></i></span> Viven en barrios / ciudades</li>
+                            <li><span class="check-circle"><i class="fa-solid fa-check"></i></span> Tienen herramientas, electrónica, camping, eventos, etc.</li>
+                            <li><span class="check-circle"><i class="fa-solid fa-check"></i></span> Quieren generar plata sin trabajar más</li>
+                            <li><span class="check-circle"><i class="fa-solid fa-check"></i></span> Donaciones</li>
+                        </ul>
                     </div>
-                    <div class="tile pop-in-right" data-delay="3">
-                        <h3><i class="fa-solid fa-house-laptop"></i> El Dueño</h3>
-                        <p>Vecinos con herramientas que buscan un flujo constante de ingresos extra de forma segura.</p>
+                    <!-- LADO B -->
+                    <div class="audience-card pop-in-right" data-delay="3" style="border-left: 6px solid #004687;">
+                        <div class="audience-header">
+                            <div class="audience-icon" style="background: #004687; color: #FFD000;">
+                                <i class="fa-solid fa-hand-holding-heart"></i>
+                            </div>
+                            <div>
+                                <span class="audience-label" style="background: #004687; color: #fff;">Lado B</span>
+                                <h3 class="audience-name">Necesitan algo (Demanda)</h3>
+                            </div>
+                        </div>
+                        <ul class="audience-list">
+                            <li><span class="check-circle"><i class="fa-solid fa-check"></i></span> No quieren comprar</li>
+                            <li><span class="check-circle"><i class="fa-solid fa-check"></i></span> Lo necesitan por horas / días</li>
+                            <li><span class="check-circle"><i class="fa-solid fa-check"></i></span> Prefieren alquilar cerca antes que comprar nuevo</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -702,7 +813,7 @@ p, li, td, th {
                 <h2 class="slide-title pop-in" data-delay="1">Logística (Radio 10 Cuadras)</h2>
                 <div class="two-column">
                     <div class="image-wrapper pop-in-left" data-delay="2">
-                        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop" alt="Mapa">
+                        <img src="mapa.jpg" alt="Mapa de nodos hiperlocales">
                     </div>
                     <div>
                         <h3 class="pop-in-right" data-delay="3">Intercambios a Pie</h3>
@@ -720,7 +831,7 @@ p, li, td, th {
                 <div class="ml-ui pop-in" data-delay="2">
                     <div class="ml-header">
                         <div style="background: white; border-radius: 8px; padding: 4px; width: 44px; height: 44px; display: grid; place-items: center; flex-shrink: 0;">
-                            <img src="logo.jpeg" style="width: 100%; object-fit: contain;">
+                            <img src="logo-app.png" style="width: 100%; object-fit: contain;">
                         </div>
                         <div class="ml-search">
                             <span>Buscar taladros, carpas...</span>
@@ -829,12 +940,12 @@ p, li, td, th {
         <!-- SLIDE 13: CIERRE -->
         <div class="slide slide-bg-dark" data-index="12">
             <div class="slide-content title-layout">
-                <div class="pop-in-scale" data-delay="1" style="background: white; border-radius: 50%; width: clamp(140px, 18vw, 200px); height: clamp(140px, 18vw, 200px); display: grid; place-items: center; margin: 0 auto 30px auto; padding: 20px; border: 8px solid #FFD000;">
+                <div class="pop-in-scale" data-delay="1" style="background: #004687; border-radius: 50%; width: clamp(140px, 18vw, 200px); height: clamp(140px, 18vw, 200px); display: grid; place-items: center; margin: 0 auto 30px auto; padding: 20px; border: 8px solid #FFD000;">
                     <img src="logo.jpeg" style="width: 100%; object-fit: contain;">
                 </div>
-                <h2 class="pop-in" data-delay="2" style="color: #FFD000; font-size: clamp(40px, 5vw, 56px);">¿Dudas?</h2>
-                <p class="pop-in" data-delay="3" style="color: #fff; font-size: clamp(20px, 3vw, 26px);">Benteveo: Entre vecinos nos entendemos.</p>
-                <div class="pop-in" data-delay="4" style="margin-top: 40px; background: rgba(255, 255, 255, 0.1); padding: 12px 32px; border-radius: 50px; border: 1px solid #FFD000;">
+                <h2 class="pop-in" data-delay="2" style="color: #004687; font-size: clamp(40px, 5vw, 56px);">¿Dudas?</h2>
+                <p class="pop-in" data-delay="3" style="color: #2d3748; font-size: clamp(20px, 3vw, 26px);">Benteveo: Entre vecinos nos entendemos.</p>
+                <div class="pop-in" data-delay="4" style="margin-top: 40px; background: #004687; padding: 12px 32px; border-radius: 50px; border: 2px solid #FFD000;">
                     <p style="color: #FFD000; font-weight: 700; font-size: 18px;">www.benteveo.app</p>
                 </div>
             </div>
