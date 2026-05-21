@@ -3,45 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benteveo App - Presentación Premium Final</title>
+    <title>Benteveo App - Presentación</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-/* 1. CONFIGURACIÓN GENERAL REFINADA */
-* { 
-  box-sizing: border-box; 
-  margin: 0; 
-  padding: 0;
+/* ============ RESET & BASE ============ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #0f172a;
+  font-family: 'Inter', sans-serif;
 }
 
-body {
-  background-color: #0f172a; /* Fondo exterior oscuro */
-  display: grid;
-  gap: 40px;
-  grid-template-columns: 1fr;
-  min-height: 100vh;
-  padding: 60px 0;
-  place-items: center;
+/* ============ PRESENTATION CONTAINER ============ */
+.presentation {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.slide-container {
-  width: 1280px;
-  height: 720px;
-  background-color: #fdfbf7; /* Crema Premium */
+/* ============ PROGRESS BAR ============ */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #004687 0%, #FFD000 100%);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(255, 208, 0, 0.5);
+}
+
+/* ============ SLIDES WRAPPER ============ */
+.slides-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  position: relative;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  padding: 60px 80px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: none;
 }
 
-/* DECORACIONES MODERNAS */
-.slide-container::before {
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+/* ============ TRANSITION ANIMATIONS ============ */
+.slide.transition-slide-out-left {
+  animation: slideOutLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.slide.transition-slide-in-right {
+  animation: slideInRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.slide.transition-slide-out-right {
+  animation: slideOutRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.slide.transition-slide-in-left {
+  animation: slideInLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.slide.transition-zoom-out {
+  animation: zoomOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.slide.transition-zoom-in {
+  animation: zoomIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideOutLeft {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-100%); opacity: 0; }
+}
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideOutRight {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+@keyframes zoomIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes zoomOut {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(1.15); opacity: 0; }
+}
+
+/* ============ POP-IN ANIMATIONS (STAGGERED) ============ */
+.pop-in {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+}
+
+.slide.active .pop-in {
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.slide.active .pop-in[data-delay="1"] { animation-delay: 0.08s; }
+.slide.active .pop-in[data-delay="2"] { animation-delay: 0.16s; }
+.slide.active .pop-in[data-delay="3"] { animation-delay: 0.24s; }
+.slide.active .pop-in[data-delay="4"] { animation-delay: 0.32s; }
+.slide.active .pop-in[data-delay="5"] { animation-delay: 0.40s; }
+.slide.active .pop-in[data-delay="6"] { animation-delay: 0.48s; }
+.slide.active .pop-in[data-delay="7"] { animation-delay: 0.56s; }
+.slide.active .pop-in[data-delay="8"] { animation-delay: 0.64s; }
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Pop-in variants */
+.pop-in-left {
+  opacity: 0;
+  transform: translateX(-40px) scale(0.95);
+}
+.slide.active .pop-in-left {
+  animation: popInLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.slide.active .pop-in-left[data-delay="1"] { animation-delay: 0.08s; }
+.slide.active .pop-in-left[data-delay="2"] { animation-delay: 0.16s; }
+.slide.active .pop-in-left[data-delay="3"] { animation-delay: 0.24s; }
+.slide.active .pop-in-left[data-delay="4"] { animation-delay: 0.32s; }
+
+@keyframes popInLeft {
+  0% { opacity: 0; transform: translateX(-40px) scale(0.95); }
+  60% { opacity: 1; transform: translateX(4px) scale(1.02); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.pop-in-right {
+  opacity: 0;
+  transform: translateX(40px) scale(0.95);
+}
+.slide.active .pop-in-right {
+  animation: popInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.slide.active .pop-in-right[data-delay="1"] { animation-delay: 0.08s; }
+.slide.active .pop-in-right[data-delay="2"] { animation-delay: 0.16s; }
+.slide.active .pop-in-right[data-delay="3"] { animation-delay: 0.24s; }
+.slide.active .pop-in-right[data-delay="4"] { animation-delay: 0.32s; }
+
+@keyframes popInRight {
+  0% { opacity: 0; transform: translateX(40px) scale(0.95); }
+  60% { opacity: 1; transform: translateX(-4px) scale(1.02); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.pop-in-scale {
+  opacity: 0;
+  transform: scale(0.8);
+}
+.slide.active .pop-in-scale {
+  animation: popInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.slide.active .pop-in-scale[data-delay="1"] { animation-delay: 0.08s; }
+.slide.active .pop-in-scale[data-delay="2"] { animation-delay: 0.16s; }
+.slide.active .pop-in-scale[data-delay="3"] { animation-delay: 0.24s; }
+.slide.active .pop-in-scale[data-delay="4"] { animation-delay: 0.32s; }
+.slide.active .pop-in-scale[data-delay="5"] { animation-delay: 0.40s; }
+.slide.active .pop-in-scale[data-delay="6"] { animation-delay: 0.48s; }
+
+@keyframes popInScale {
+  0% { opacity: 0; transform: scale(0.8); }
+  60% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.pop-in-rotate {
+  opacity: 0;
+  transform: rotate(-3deg) scale(0.9);
+}
+.slide.active .pop-in-rotate {
+  animation: popInRotate 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.slide.active .pop-in-rotate[data-delay="1"] { animation-delay: 0.08s; }
+.slide.active .pop-in-rotate[data-delay="2"] { animation-delay: 0.16s; }
+.slide.active .pop-in-rotate[data-delay="3"] { animation-delay: 0.24s; }
+
+@keyframes popInRotate {
+  0% { opacity: 0; transform: rotate(-3deg) scale(0.9); }
+  60% { opacity: 1; transform: rotate(1deg) scale(1.03); }
+  100% { opacity: 1; transform: rotate(0deg) scale(1); }
+}
+
+/* ============ SLIDE CONTENT (CENTERED) ============ */
+.slide-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============ SLIDE BACKGROUNDS ============ */
+.slide-bg-cream {
+  background: #fdfbf7;
+}
+.slide-bg-cream::before {
   content: '';
   position: absolute;
   top: -10%; right: -10%;
@@ -50,8 +245,7 @@ body {
   z-index: 0;
   pointer-events: none;
 }
-
-.slide-container::after {
+.slide-bg-cream::after {
   content: '';
   position: absolute;
   bottom: 0; left: 0;
@@ -60,26 +254,112 @@ body {
   z-index: 2;
 }
 
-h1, h2, h3 { 
-  font-family: 'Playfair Display', serif; 
-  color: #004687; 
-  margin-bottom: 10px;
+.slide-bg-dark {
+  background: linear-gradient(135deg, #004687 0%, #002244 100%);
 }
 
-p, li, td, th { 
-  color: #2d3748; 
-  font-size: 19px; 
-  line-height: 1.6;
+/* ============ NAVIGATION BUTTONS ============ */
+.nav-btn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 208, 0, 0.4);
+  background: rgba(0, 70, 135, 0.85);
+  color: #FFD000;
+  font-size: 22px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(8px);
+}
+.nav-btn:hover {
+  background: #FFD000;
+  color: #004687;
+  border-color: #FFD000;
+  transform: translateY(-50%) scale(1.1);
+}
+.nav-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: translateY(-50%);
+}
+.nav-btn:disabled:hover {
+  background: rgba(0, 70, 135, 0.85);
+  color: #FFD000;
+  border-color: rgba(255, 208, 0, 0.4);
+}
+.nav-btn.prev { left: 24px; }
+.nav-btn.next { right: 24px; }
+
+/* ============ SLIDE COUNTER ============ */
+.slide-counter {
+  position: fixed;
+  bottom: 24px;
+  right: 32px;
+  z-index: 100;
+  background: rgba(0, 70, 135, 0.8);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 24px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 208, 0, 0.3);
+}
+
+/* ============ TYPOGRAPHY & COMPONENTS ============ */
+h1, h2, h3, h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #004687;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+
+h4 { font-size: 20px; font-weight: 600; }
+
+.slide-bg-dark h1,
+.slide-bg-dark h2,
+.slide-bg-dark h3 {
+  color: #FFD000;
+}
+
+p, li, td, th {
+  color: #2d3748;
+  font-size: 19px;
+  line-height: 1.7;
+  font-family: 'Inter', sans-serif;
+}
+
+.slide-bg-dark p,
+.slide-bg-dark li,
+.slide-bg-dark td,
+.slide-bg-dark th {
+  color: #e2e8f0;
 }
 
 .slide-title {
-  font-size: 46px;
-  font-weight: 800;
-  margin-bottom: 45px;
+  font-size: clamp(32px, 4vw, 46px);
+  font-weight: 700;
+  margin-bottom: 35px;
   color: #004687;
   position: relative;
   display: inline-block;
   z-index: 1;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.slide-bg-dark .slide-title {
+  color: #FFD000;
 }
 
 .slide-title::after {
@@ -93,19 +373,19 @@ p, li, td, th {
   border-radius: 4px;
 }
 
-.content-area {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  z-index: 1;
+.slide-bg-dark .slide-title::after {
+  background-color: #fff;
 }
 
-.title-layout { text-align: center; justify-content: center; align-items: center; }
-.logo-main { 
-  height: 280px; 
-  margin-bottom: 25px; 
+.title-layout {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-main {
+  height: clamp(180px, 25vh, 280px);
+  margin-bottom: 25px;
   object-fit: contain;
   filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
 }
@@ -123,365 +403,605 @@ p, li, td, th {
   margin-bottom: 15px;
 }
 
-.two-column { 
-  display: grid; 
-  grid-template-columns: 1.1fr 0.9fr; 
-  gap: 50px; 
-  align-items: center; 
+.two-column {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 40px;
+  align-items: center;
 }
 
-.tile { 
-  background: #ffffff; 
-  padding: 35px; 
-  border-radius: 12px; 
+.tile {
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0,70,135,0.05);
   border-top: 5px solid #004687;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.tile i { 
-  font-size: 42px; 
-  color: #FFD000; 
-  margin-bottom: 20px;
+.tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 35px rgba(0,70,135,0.12);
+}
+
+.tile i {
+  font-size: 36px;
+  color: #FFD000;
+  margin-bottom: 16px;
   background: #004687;
-  width: 70px; height: 70px;
+  width: 64px; height: 64px;
   display: grid;
   place-items: center;
   border-radius: 50%;
 }
 
-.image-wrapper { 
-  border-radius: 12px; 
-  overflow: hidden; 
-  height: 420px; 
-  border: 4px solid #fff; 
-  box-shadow: 0 15px 35px rgba(0,0,0,0.12); 
+.image-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  height: clamp(250px, 40vh, 420px);
+  border: 4px solid #fff;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
 }
 .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
 /* ML UI STYLE */
-.ml-ui { 
-  background: #f5f5f5; 
-  border-radius: 16px; 
-  width: 100%; 
+.ml-ui {
+  background: #f5f5f5;
+  border-radius: 16px;
+  width: 100%;
   box-shadow: 0 15px 40px rgba(0,0,0,0.15);
   overflow: hidden;
 }
-.ml-header { 
-  background: #FFD000; 
-  padding: 20px 30px; 
-  display: flex; 
-  align-items: center; 
-  gap: 20px; 
+.ml-header {
+  background: #FFD000;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
-.ml-search { 
-  background: white; 
-  flex-grow: 1; 
-  padding: 12px 20px; 
-  border-radius: 8px; 
-  color: #718096; 
+.ml-search {
+  background: white;
+  flex-grow: 1;
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: #718096;
   display: flex;
   justify-content: space-between;
+  font-size: 16px;
 }
-.ml-product-grid { 
-  display: grid; 
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 25px; 
-  padding: 30px;
+.ml-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 24px;
   background: #fff;
 }
-.ml-card { 
-  border: 1px solid #e2e8f0; 
-  border-radius: 12px; 
-  padding: 20px; 
+.ml-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
   background: white;
+  transition: transform 0.2s ease;
 }
-.ml-price { 
-  font-size: 26px; 
-  font-weight: 700; 
-  color: #1a202c; 
+.ml-card:hover { transform: translateY(-3px); }
+.ml-price {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a202c;
 }
-.ml-detail { 
-  font-size: 14px; 
-  color: #00a650; 
-  font-weight: 700; 
+.ml-detail {
+  font-size: 13px;
+  color: #00a650;
+  font-weight: 700;
 }
 
 .chatbot {
-  position: absolute; 
-  bottom: 45px; 
-  right: 50px; 
-  background: linear-gradient(135deg, #004687 0%, #002b54 100%); 
+  position: absolute;
+  bottom: 35px;
+  right: 40px;
+  background: linear-gradient(135deg, #004687 0%, #002b54 100%);
   color: white;
-  padding: 18px 28px; 
-  border-radius: 30px 30px 4px 30px; 
-  display: flex; 
-  align-items: center; 
-  gap: 12px;
+  padding: 14px 22px;
+  border-radius: 30px 30px 4px 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-weight: 500;
   border: 2px solid rgba(255, 208, 0, 0.4);
+  font-size: 16px;
+  animation: chatPulse 2s ease-in-out infinite;
+}
+
+@keyframes chatPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
 }
 
 /* TABLAS */
-.table-layout table { 
-  border-collapse: separate; 
-  border-spacing: 0 10px;
-  width: 100%; 
+.table-layout table {
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  width: 100%;
 }
-.table-layout th { 
-  background-color: #004687; 
-  color: #fff; 
-  padding: 18px; 
+.table-layout th {
+  background-color: #004687;
+  color: #fff;
+  padding: 14px;
   text-align: left;
   border-radius: 8px;
+  font-size: 16px;
 }
-.table-layout td { 
+.table-layout td {
   background: #fff;
-  padding: 16px 20px; 
+  padding: 12px 16px;
+  font-size: 16px;
 }
-.id-badge { 
-  background: #FFD000; 
-  color: #004687; 
-  font-weight: 700; 
-  padding: 6px 14px; 
-  border-radius: 6px; 
+.table-layout tbody tr {
+  transition: transform 0.2s ease;
+}
+.table-layout tbody tr:hover {
+  transform: scale(1.01);
+}
+.id-badge {
+  background: #FFD000;
+  color: #004687;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* ============ RESPONSIVE ADJUSTMENTS ============ */
+@media (max-width: 1024px) {
+  .slide-content { padding: 40px 50px; }
+  .two-column { grid-template-columns: 1fr; gap: 24px; }
+  .ml-product-grid { grid-template-columns: repeat(2, 1fr); }
+  .nav-btn { width: 44px; height: 44px; font-size: 18px; }
+  .nav-btn.prev { left: 12px; }
+  .nav-btn.next { right: 12px; }
+}
+
+@media (max-width: 768px) {
+  .slide-content { padding: 30px 24px; }
+  .slide-title { font-size: 28px; margin-bottom: 20px; }
+  p, li, td, th { font-size: 15px; }
+  .ml-product-grid { grid-template-columns: 1fr; }
+  .chatbot { display: none; }
 }
     </style>
 </head>
 <body>
 
-<div class="slide-container" id="slide1">
-    <div class="content-area title-layout">
-        <img src="logo.jpeg" class="logo-main" alt="Logo Benteveo">
-        <span class="accent-badge">Plataforma P2P Líder</span>
-        <h1 style="font-size: 64px; font-weight: 800;">Benteveo</h1>
-        <p class="subtitle" style="font-size: 38px; font-weight: 700; color: #FFD000; font-family: 'Playfair Display', serif;">"Te hace la gauchada"</p>
-        <p style="margin-top: 35px; font-size: 22px; color: #4a5568;">Estrategia de Mercado y Operaciones 2026</p>
-    </div>
-</div>
+<div class="presentation">
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
 
-<div class="slide-container" id="slide2">
-    <h2 class="slide-title">Visión y Propósito Estratégico</h2>
-    <div class="content-area">
-        <div class="tile" style="width: 100%; text-align: center; border-left: 12px solid #FFD000;">
-            <p style="font-size: 34px; font-family: 'Playfair Display', serif; color: #004687; font-weight: 700;">"Gente común alquilando cosas comunes a gente cercana."</p>
-        </div>
-        <div class="two-column" style="grid-template-columns: 1fr 1fr; margin-top: 30px;">
-            <div class="tile">
-                <h3><i class="fa-solid fa-recycle"></i> Economía Circular</h3>
-                <p>Reducimos la necesidad de propiedad compartiendo recursos.</p>
-            </div>
-            <div class="tile">
-                <h3><i class="fa-solid fa-users-rays"></i> Resiliencia Barrial</h3>
-                <p>Monetización segura del capital dormido de cada vecino.</p>
+    <!-- Slides -->
+    <div class="slides-wrapper" id="slidesWrapper">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="slide slide-bg-cream active" data-index="0">
+            <div class="slide-content title-layout">
+                <img src="logo.jpeg" class="logo-main pop-in-scale" data-delay="1" alt="Logo Benteveo">
+                <span class="accent-badge pop-in" data-delay="2">Plataforma P2P Líder</span>
+                <h1 class="pop-in" data-delay="3" style="font-size: clamp(48px, 6vw, 64px); font-weight: 800;">Benteveo</h1>
+                <p class="subtitle pop-in" data-delay="4" style="font-size: clamp(28px, 4vw, 38px); font-weight: 700; color: #FFD000; font-family: 'Space Grotesk', sans-serif;">"Te hace la gauchada"</p>
+                <p class="pop-in" data-delay="5" style="margin-top: 35px; font-size: clamp(18px, 2.5vw, 22px); color: #4a5568;">Estrategia de Mercado y Operaciones 2026</p>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="slide-container" id="slide3">
-    <h2 class="slide-title">El Problema: Capital Dormido</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div class="image-wrapper">
-                <img src="garage.jpg" alt="Garage con herramientas">
-            </div>
-            <div>
-                <ul style="list-style: none;">
-                    <li style="margin-bottom: 30px; display: flex;"><i class="fa-solid fa-circle-xmark" style="color:#e53e3e; margin-right: 15px;"></i><span><strong>Activos Ociosos:</strong> Un taladro se usa solo 13 min en toda su vida.</span></li>
-                    <li style="margin-bottom: 30px; display: flex;"><i class="fa-solid fa-circle-xmark" style="color:#e53e3e; margin-right: 15px;"></i><span><strong>Gasto Ineficiente:</strong> Compras caras para tareas de una sola tarde.</span></li>
-                    <li style="margin-bottom: 30px; display: flex;"><i class="fa-solid fa-circle-xmark" style="color:#e53e3e; margin-right: 15px;"></i><span><strong>Desorden Urbano:</strong> Acumulación que quita espacio vital.</span></li>
-                </ul>
+        <!-- SLIDE 2: VISIÓN Y PROPÓSITO -->
+        <div class="slide slide-bg-cream" data-index="1">
+            <div class="slide-content">
+                <h2 class="slide-title pop-in" data-delay="1">Visión y Propósito Estratégico</h2>
+                <div class="tile pop-in" data-delay="2" style="width: 100%; text-align: center; border-left: 12px solid #FFD000; margin-bottom: 24px;">
+                    <p style="font-size: clamp(22px, 3vw, 34px); font-family: 'Space Grotesk', sans-serif; color: #004687; font-weight: 700;">"Gente común alquilando cosas comunes a gente cercana."</p>
+                </div>
+                <div class="two-column" style="grid-template-columns: 1fr 1fr;">
+                    <div class="tile pop-in-left" data-delay="3">
+                        <h3><i class="fa-solid fa-recycle"></i> Economía Circular</h3>
+                        <p>Reducimos la necesidad de propiedad compartiendo recursos.</p>
+                    </div>
+                    <div class="tile pop-in-right" data-delay="4">
+                        <h3><i class="fa-solid fa-users-rays"></i> Resiliencia Barrial</h3>
+                        <p>Monetización segura del capital dormido de cada vecino.</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="slide-container" id="slide4">
-    <h2 class="slide-title">La Gauchada Digital</h2>
-    <div class="content-area">
-        <div class="two-column" style="grid-template-columns: 0.9fr 1.1fr;">
-            <div>
-                <h3 style="font-size: 28px;">Marketplace P2P Hiperlocal</h3>
-                <p style="margin-bottom: 20px;">Automatizamos publicaciones, reservas dinámicas y pagos seguros con resguardo total.</p>
-                <p style="font-weight: 600; color: #004687;">Ganá dinero extra pasivo o ahorrá alquilando a menos de 10 cuadras.</p>
-            </div>
-            <div class="image-wrapper">
-                <img src="vecinos.jpg" alt="Vecinos colaborando">
+        <!-- SLIDE 3: EL PROBLEMA -->
+        <div class="slide slide-bg-cream" data-index="2">
+            <div class="slide-content">
+                <h2 class="slide-title pop-in" data-delay="1">El Problema: Capital Dormido</h2>
+                <div class="two-column">
+                    <div class="image-wrapper pop-in-left" data-delay="2">
+                        <img src="garage.jpg" alt="Garage con herramientas">
+                    </div>
+                    <div>
+                        <ul style="list-style: none;">
+                            <li class="pop-in" data-delay="3" style="margin-bottom: 24px; display: flex; align-items: flex-start;">
+                                <i class="fa-solid fa-circle-xmark" style="color:#e53e3e; margin-right: 15px; margin-top: 4px; font-size: 22px;"></i>
+                                <span><strong>Activos Ociosos:</strong> Un taladro se usa solo 13 min en toda su vida.</span>
+                            </li>
+                            <li class="pop-in" data-delay="4" style="margin-bottom: 24px; display: flex; align-items: flex-start;">
+                                <i class="fa-solid fa-circle-xmark" style="color:#e53e3e; margin-right: 15px; margin-top: 4px; font-size: 22px;"></i>
+                                <span><strong>Gasto Ineficiente:</strong> Compras caras para tareas de una sola tarde.</span>
+                            </li>
+                            <li class="pop-in" data-delay="5" style="margin-bottom: 24px; display: flex; align-items: flex-start;">
+                                <i class="fa-solid fa-circle-xmark" style="color:#e53e3e; margin-right: 15px; margin-top: 4px; font-size: 22px;"></i>
+                                <span><strong>Desorden Urbano:</strong> Acumulación que quita espacio vital.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="slide-container" id="slide5">
-    <h2 class="slide-title">¿A quién está destinado?</h2>
-    <div class="content-area">
-        <div class="two-column" style="grid-template-columns: 1fr 1fr;">
-            <div class="tile" style="border-top-color: #FFD000;">
-                <h3><i class="fa-solid fa-user-gear"></i> El Inquilino</h3>
-                <p>Estudiantes o profesionales que necesitan solucionar una necesidad puntual sin comprar el bien.</p>
-            </div>
-            <div class="tile">
-                <h3><i class="fa-solid fa-house-laptop"></i> El Dueño</h3>
-                <p>Vecinos con herramientas que buscan un flujo constante de ingresos extra de forma segura.</p>
+        <!-- SLIDE 4: LA GAUCHADA DIGITAL -->
+        <div class="slide slide-bg-cream" data-index="3">
+            <div class="slide-content">
+                <h2 class="slide-title pop-in" data-delay="1">La Gauchada Digital</h2>
+                <div class="two-column" style="grid-template-columns: 0.9fr 1.1fr;">
+                    <div>
+                        <h3 class="pop-in-left" data-delay="2" style="font-size: 26px;">Marketplace P2P Hiperlocal</h3>
+                        <p class="pop-in-left" data-delay="3" style="margin-bottom: 16px;">Automatizamos publicaciones, reservas dinámicas y pagos seguros con resguardo total.</p>
+                        <p class="pop-in-left" data-delay="4" style="font-weight: 600; color: #004687;">Ganá dinero extra pasivo o ahorrá alquilando a menos de 10 cuadras.</p>
+                    </div>
+                    <div class="image-wrapper pop-in-right" data-delay="3">
+                        <img src="vecinos.jpg" alt="Vecinos colaborando">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="slide-container" id="slide6">
-    <h2 class="slide-title">Confianza Activa y Seguridad</h2>
-    <div class="content-area">
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
-            <div class="tile">
-                <i class="fa-solid fa-user-shield"></i>
-                <h3>Validación KYC</h3>
-                <p>Verificación estricta de identidad para asegurar vecinos reales.</p>
-            </div>
-            <div class="tile" style="border-top-color: #FFD000;">
-                <i class="fa-solid fa-vault"></i>
-                <h3>Garantía</h3>
-                <p>Retención preventiva que resguarda el valor del activo.</p>
-            </div>
-            <div class="tile">
-                <i class="fa-solid fa-ranking-star"></i>
-                <h3>Reputación</h3>
-                <p>Sistema de puntuación bidireccional por cada alquiler.</p>
+        <!-- SLIDE 5: PÚBLICO OBJETIVO -->
+        <div class="slide slide-bg-cream" data-index="4">
+            <div class="slide-content">
+                <h2 class="slide-title pop-in" data-delay="1">¿A quién está destinado?</h2>
+                <div class="two-column" style="grid-template-columns: 1fr 1fr;">
+                    <div class="tile pop-in-left" data-delay="2" style="border-top-color: #FFD000;">
+                        <h3><i class="fa-solid fa-user-gear"></i> El Inquilino</h3>
+                        <p>Estudiantes o profesionales que necesitan solucionar una necesidad puntual sin comprar el bien.</p>
+                    </div>
+                    <div class="tile pop-in-right" data-delay="3">
+                        <h3><i class="fa-solid fa-house-laptop"></i> El Dueño</h3>
+                        <p>Vecinos con herramientas que buscan un flujo constante de ingresos extra de forma segura.</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="slide-container" id="slide7">
-    <h2 class="slide-title">Logística (Radio 10 Cuadras)</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop" alt="Mapa">
-            </div>
-            <div>
-                <h3>Intercambios a Pie</h3>
-                <p>Sin costos de flete. El vecino te entrega el objeto a la vuelta de casa.</p>
-                <p style="margin-top: 20px; font-weight: 600; color: #004687;">Nodos: Palermo, Almagro, Caballito, Quilmes y Varela.</p>
+        <!-- SLIDE 6: CONFIANZA Y SEGURIDAD -->
+        <div class="slide slide-bg-cream" data-index="5">
+            <div class="slide-content">
+                <h2 class="slide-title pop-in" data-delay="1">Confianza Activa y Seguridad</h2>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                    <div class="tile pop-in-scale" data-delay="2">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <h3>Validación KYC</h3>
+                        <p>Verificación estricta de identidad para asegurar vecinos reales.</p>
+                    </div>
+                    <div class="tile pop-in-scale" data-delay="3" style="border-top-color: #FFD000;">
+                        <i class="fa-solid fa-vault"></i>
+                        <h3>Garantía</h3>
+                        <p>Retención preventiva que resguarda el valor del activo.</p>
+                    </div>
+                    <div class="tile pop-in-scale" data-delay="4">
+                        <i class="fa-solid fa-ranking-star"></i>
+                        <h3>Reputación</h3>
+                        <p>Sistema de puntuación bidireccional por cada alquiler.</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="slide-container" id="slide8">
-    <h2 class="slide-title">Interfaz y Experiencia UX</h2>
-    <div class="content-area">
-        <div class="ml-ui">
-            <div class="ml-header">
-                <div style="background: white; border-radius: 8px; padding: 4px; width: 50px; height: 50px; display: grid; place-items: center;">
+        <!-- SLIDE 7: LOGÍSTICA -->
+        <div class="slide slide-bg-cream" data-index="6">
+            <div class="slide-content">
+                <h2 class="slide-title pop-in" data-delay="1">Logística (Radio 10 Cuadras)</h2>
+                <div class="two-column">
+                    <div class="image-wrapper pop-in-left" data-delay="2">
+                        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop" alt="Mapa">
+                    </div>
+                    <div>
+                        <h3 class="pop-in-right" data-delay="3">Intercambios a Pie</h3>
+                        <p class="pop-in-right" data-delay="4">Sin costos de flete. El vecino te entrega el objeto a la vuelta de casa.</p>
+                        <p class="pop-in-right" data-delay="5" style="margin-top: 16px; font-weight: 600; color: #004687;">Nodos: Palermo, Almagro, Caballito, Quilmes y Varela.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: UI/UX -->
+        <div class="slide slide-bg-cream" data-index="7">
+            <div class="slide-content">
+                <h2 class="slide-title pop-in" data-delay="1">Interfaz y Experiencia UX</h2>
+                <div class="ml-ui pop-in" data-delay="2">
+                    <div class="ml-header">
+                        <div style="background: white; border-radius: 8px; padding: 4px; width: 44px; height: 44px; display: grid; place-items: center; flex-shrink: 0;">
+                            <img src="logo.jpeg" style="width: 100%; object-fit: contain;">
+                        </div>
+                        <div class="ml-search">
+                            <span>Buscar taladros, carpas...</span>
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                    </div>
+                    <div class="ml-product-grid">
+                        <div class="ml-card pop-in-scale" data-delay="3">
+                            <div style="height: 90px; background: #f7fafc; display: grid; place-items: center;"><i class="fa-solid fa-hammer" style="font-size: 32px; color: #004687;"></i></div>
+                            <p class="ml-price">$4.500</p>
+                            <p class="ml-detail">Palermo • Hoy</p>
+                            <p style="font-size: 14px;">Rotomartillo Industrial</p>
+                        </div>
+                        <div class="ml-card pop-in-scale" data-delay="4">
+                            <div style="height: 90px; background: #f7fafc; display: grid; place-items: center;"><i class="fa-solid fa-campground" style="font-size: 32px; color: #004687;"></i></div>
+                            <p class="ml-price">$12.000</p>
+                            <p class="ml-detail">⭐ Destacado</p>
+                            <p style="font-size: 14px;">Carpa Térmica 4P</p>
+                        </div>
+                        <div class="ml-card pop-in-scale" data-delay="5">
+                            <div style="height: 90px; background: #f7fafc; display: grid; place-items: center;"><i class="fa-solid fa-camera" style="font-size: 32px; color: #004687;"></i></div>
+                            <p class="ml-price">$8.500</p>
+                            <p class="ml-detail">A 300 metros</p>
+                            <p style="font-size: 14px;">Cámara Réflex</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="chatbot pop-in-rotate" data-delay="6">
+                    <i class="fa-solid fa-comment-dots"></i>
+                    <span>¡Hola! Soy Benti. ¿Buscás una gauchada?</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: FUNCIONALIDADES -->
+        <div class="slide slide-bg-cream" data-index="8">
+            <div class="slide-content">
+                <h2 class="slide-title pop-in" data-delay="1">Funcionalidades del Ecosistema</h2>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                    <div class="tile pop-in-rotate" data-delay="2"><h4><i class="fa-solid fa-clock-rotate-left"></i> Reservas</h4><p>Calendario inteligente en tiempo real.</p></div>
+                    <div class="tile pop-in-rotate" data-delay="3" style="border-top-color: #FFD000;"><h4><i class="fa-solid fa-credit-card"></i> Pagos</h4><p>Integración total con Mercado Pago.</p></div>
+                    <div class="tile pop-in-rotate" data-delay="4" style="border-top-color: #FFD000;"><h4><i class="fa-solid fa-feather-pointed"></i> Publicación</h4><p>Carga ágil en solo 3 pasos.</p></div>
+                    <div class="tile pop-in-rotate" data-delay="5"><h4><i class="fa-solid fa-headset"></i> Soporte IA</h4><p>Asistente inteligente para disputas.</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: DESPLIEGUE -->
+        <div class="slide slide-bg-cream" data-index="9">
+            <div class="slide-content">
+                <h2 class="slide-title pop-in" data-delay="1">Despliegue Estratégico de Nodos</h2>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                    <div class="tile pop-in-scale" data-delay="2"><span class="id-badge">Fase 1</span><h3>CABA Core</h3><p>Almagro, Palermo, Caballito.</p></div>
+                    <div class="tile pop-in-scale" data-delay="3" style="border-top-color: #FFD000;"><span class="id-badge">Fase 2</span><h3>GBA Sur A</h3><p>Quilmes Centro.</p></div>
+                    <div class="tile pop-in-scale" data-delay="4"><span class="id-badge">Fase 2</span><h3>GBA Sur B</h3><p>Varela Centro.</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: EQUIPO 1-5 -->
+        <div class="slide slide-bg-cream" data-index="10">
+            <div class="slide-content">
+                <h2 class="slide-title pop-in" data-delay="1">Nuestro Equipo (1/2)</h2>
+                <div class="table-layout">
+                    <table>
+                        <thead><tr><th>#</th><th>Integrante</th><th>Área</th><th>Responsabilidad</th></tr></thead>
+                        <tbody>
+                            <tr class="pop-in" data-delay="2"><td><span class="id-badge">01</span></td><td>Abraham Ferreira</td><td>Back End</td><td>Infraestructura Cloud</td></tr>
+                            <tr class="pop-in" data-delay="3"><td><span class="id-badge">02</span></td><td>Rocío Velázquez</td><td>Back End</td><td>Administración DB</td></tr>
+                            <tr class="pop-in" data-delay="4"><td><span class="id-badge">03</span></td><td>Edson Chura</td><td>Front End</td><td>Desarrollo Frontend</td></tr>
+                            <tr class="pop-in" data-delay="5"><td><span class="id-badge">04</span></td><td>Kevin Dávalos</td><td>Front End</td><td>Arquitectura Mobile</td></tr>
+                            <tr class="pop-in" data-delay="6"><td><span class="id-badge">05</span></td><td>Camila Pillco</td><td>Front End</td><td>Producto y Marketing</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: EQUIPO 6-10 -->
+        <div class="slide slide-bg-cream" data-index="11">
+            <div class="slide-content">
+                <h2 class="slide-title pop-in" data-delay="1">Nuestro Equipo (2/2)</h2>
+                <div class="table-layout">
+                    <table>
+                        <thead><tr><th>#</th><th>Integrante</th><th>Área</th><th>Responsabilidad</th></tr></thead>
+                        <tbody>
+                            <tr class="pop-in" data-delay="2"><td><span class="id-badge">06</span></td><td>Pedro Lezcano</td><td>Front End</td><td>QA y Testing</td></tr>
+                            <tr class="pop-in" data-delay="3"><td><span class="id-badge">07</span></td><td>Lucía Iglesias</td><td>Front End</td><td>Gestión de Pagos e IA</td></tr>
+                            <tr class="pop-in" data-delay="4"><td><span class="id-badge">08</span></td><td>Esteban Karaputny</td><td>Back End</td><td>Liderazgo Técnico</td></tr>
+                            <tr class="pop-in" data-delay="5"><td><span class="id-badge">09</span></td><td>Rocío Choque</td><td>Front End</td><td>Innovación e IA Support</td></tr>
+                            <tr class="pop-in" data-delay="6"><td><span class="id-badge">10</span></td><td>María E. Pimienta</td><td>Front End</td><td>UX y Marca</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="margin-top: 20px; display: flex; gap: 20px; align-items: center;">
+                    <div class="tile pop-in-left" data-delay="7" style="padding: 16px 24px; flex: 1; text-align: center;">
+                        <p style="font-size: 16px;"><strong>Líderes:</strong> Rocío & Esteban</p>
+                    </div>
+                    <div class="tile pop-in-right" data-delay="8" style="padding: 16px 24px; flex: 1; text-align: center; border-top-color: #FFD000;">
+                        <p style="font-size: 16px;"><strong>Metodología:</strong> Vibe Coding Grupal + Consejo Dev</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: CIERRE -->
+        <div class="slide slide-bg-dark" data-index="12">
+            <div class="slide-content title-layout">
+                <div class="pop-in-scale" data-delay="1" style="background: white; border-radius: 50%; width: clamp(140px, 18vw, 200px); height: clamp(140px, 18vw, 200px); display: grid; place-items: center; margin: 0 auto 30px auto; padding: 20px; border: 8px solid #FFD000;">
                     <img src="logo.jpeg" style="width: 100%; object-fit: contain;">
                 </div>
-                <div class="ml-search">
-                    <span>Buscar taladros, carpas...</span>
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
-            </div>
-            <div class="ml-product-grid">
-                <div class="ml-card">
-                    <div style="height: 110px; background: #f7fafc; display: grid; place-items: center;"><i class="fa-solid fa-hammer" style="font-size: 38px; color: #004687;"></i></div>
-                    <p class="ml-price">$4.500</p>
-                    <p class="ml-detail">Palermo • Hoy</p>
-                    <p>Rotomartillo Industrial</p>
-                </div>
-                <div class="ml-card">
-                    <div style="height: 110px; background: #f7fafc; display: grid; place-items: center;"><i class="fa-solid fa-campground" style="font-size: 38px; color: #004687;"></i></div>
-                    <p class="ml-price">$12.000</p>
-                    <p class="ml-detail">⭐ Destacado</p>
-                    <p>Carpa Térmica 4P</p>
-                </div>
-                <div class="ml-card">
-                    <div style="height: 110px; background: #f7fafc; display: grid; place-items: center;"><i class="fa-solid fa-camera" style="font-size: 38px; color: #004687;"></i></div>
-                    <p class="ml-price">$8.500</p>
-                    <p class="ml-detail">A 300 metros</p>
-                    <p>Cámara Réflex</p>
+                <h2 class="pop-in" data-delay="2" style="color: #FFD000; font-size: clamp(40px, 5vw, 56px);">¿Dudas?</h2>
+                <p class="pop-in" data-delay="3" style="color: #fff; font-size: clamp(20px, 3vw, 26px);">Benteveo: Entre vecinos nos entendemos.</p>
+                <div class="pop-in" data-delay="4" style="margin-top: 40px; background: rgba(255, 255, 255, 0.1); padding: 12px 32px; border-radius: 50px; border: 1px solid #FFD000;">
+                    <p style="color: #FFD000; font-weight: 700; font-size: 18px;">www.benteveo.app</p>
                 </div>
             </div>
         </div>
-        <div class="chatbot">
-            <i class="fa-solid fa-comment-dots"></i>
-            <span>¡Hola! Soy Benti. ¿Buscás una gauchada?</span>
-        </div>
+
     </div>
+
+    <!-- Navigation Buttons -->
+    <button class="nav-btn prev" id="prevBtn" disabled aria-label="Anterior">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button class="nav-btn next" id="nextBtn" aria-label="Siguiente">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+    <!-- Slide Counter -->
+    <div class="slide-counter" id="slideCounter">1 / 13</div>
 </div>
 
-<div class="slide-container" id="slide9">
-    <h2 class="slide-title">Funcionalidades del Ecosistema</h2>
-    <div class="content-area">
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px;">
-            <div class="tile"><h4><i class="fa-solid fa-clock-rotate-left"></i> Reservas</h4><p>Calendario inteligente en tiempo real.</p></div>
-            <div class="tile" style="border-top-color: #FFD000;"><h4><i class="fa-solid fa-credit-card"></i> Pagos</h4><p>Integración total con Mercado Pago.</p></div>
-            <div class="tile" style="border-top-color: #FFD000;"><h4><i class="fa-solid fa-feather-pointed"></i> Publicación</h4><p>Carga ágil en solo 3 pasos.</p></div>
-            <div class="tile"><h4><i class="fa-solid fa-headset"></i> Soporte IA</h4><p>Asistente inteligente para disputas.</p></div>
-        </div>
-    </div>
-</div>
+<script>
+(function() {
+    'use strict';
 
-<div class="slide-container" id="slide10">
-    <h2 class="slide-title">Despliegue Estratégico de Nodos</h2>
-    <div class="content-area">
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
-            <div class="tile"><span class="id-badge">Fase 1</span><h3>CABA Core</h3><p>Almagro, Palermo, Caballito.</p></div>
-            <div class="tile" style="border-top-color: #FFD000;"><span class="id-badge">Fase 2</span><h3>GBA Sur A</h3><p>Quilmes Centro.</p></div>
-            <div class="tile"><span class="id-badge">Fase 2</span><h3>GBA Sur B</h3><p>Varela Centro.</p></div>
-        </div>
-    </div>
-</div>
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    let isAnimating = false;
 
-<div class="slide-container" id="slide11">
-    <h2 class="slide-title">Administración (Miembros 1-6)</h2>
-    <div class="content-area">
-        <div class="table-layout">
-            <table>
-                <thead><tr><th>ID</th><th>Integrante</th><th>Responsabilidad</th></tr></thead>
-                <tbody>
-                    <tr><td><span class="id-badge">01</span></td><td>Lucia</td><td>Gestión de Pagos e IA</td></tr>
-                    <tr><td><span class="id-badge">02</span></td><td>Ed</td><td>Desarrollo Frontend</td></tr>
-                    <tr><td><span class="id-badge">03</span></td><td>Euge</td><td>UX y Marca</td></tr>
-                    <tr><td><span class="id-badge">04</span></td><td>Kevin</td><td>Arquitectura Mobile</td></tr>
-                    <tr><td><span class="id-badge">05</span></td><td>Cami</td><td>Producto y Marketing</td></tr>
-                    <tr><td><span class="id-badge">06</span></td><td>Abraham</td><td>Infraestructura Cloud</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressBar = document.getElementById('progressBar');
+    const slideCounter = document.getElementById('slideCounter');
 
-<div class="slide-container" id="slide12">
-    <h2 class="slide-title">Administración (Miembros 7-12)</h2>
-    <div class="content-area">
-        <div class="table-layout">
-            <table>
-                <thead><tr><th>ID</th><th>Integrante</th><th>Responsabilidad</th></tr></thead>
-                <tbody>
-                    <tr><td><span class="id-badge">07</span></td><td>Esteban</td><td>Liderazgo Técnico (Back)</td></tr>
-                    <tr><td><span class="id-badge">08</span></td><td>Pedro</td><td>QA y Testing</td></tr>
-                    <tr><td><span class="id-badge">09</span></td><td>Rocio C.</td><td>Innovación e IA Support</td></tr>
-                    <tr><td><span class="id-badge">10</span></td><td>Rocio V.</td><td>Administración DB</td></tr>
-                    <tr><td><span class="id-badge">11</span></td><td>Rocio V.</td><td>Seguridad y Consultas</td></tr>
-                    <tr><td><span class="id-badge">12</span></td><td>Esteban</td><td>Ciberseguridad y Sprints</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+    function getTransitionType(index) {
+        return index % 2 === 0 ? 'slide' : 'zoom';
+    }
 
-<div class="slide-container" id="slide13" style="background: linear-gradient(135deg, #004687 0%, #002244 100%); text-align: center;">
-    <div class="content-area">
-        <div style="background: white; border-radius: 50%; width: 200px; height: 200px; display: grid; place-items: center; margin: 0 auto 35px auto; padding: 25px; border: 8px solid #FFD000;">
-            <img src="logo.jpeg" style="width: 100%; object-fit: contain;">
-        </div>
-        <h2 style="color: #FFD000; font-size: 56px;">¿Dudas?</h2>
-        <p style="color: #fff; font-size: 26px;">Benteveo: Entre vecinos nos entendemos.</p>
-        <div style="margin-top: 50px; background: rgba(255, 255, 255, 0.1); padding: 15px 40px; border-radius: 50px; border: 1px solid #FFD000;">
-            <p style="color: #FFD000; font-weight: 700;">www.benteveo.app</p>
-        </div>
-    </div>
-</div>
+    function resetPopAnimations(slide) {
+        const animElements = slide.querySelectorAll('.pop-in, .pop-in-left, .pop-in-right, .pop-in-scale, .pop-in-rotate');
+        animElements.forEach(el => {
+            el.style.animation = 'none';
+            el.offsetHeight; // force reflow
+            el.style.animation = '';
+        });
+    }
+
+    function updateUI() {
+        const progress = ((currentIndex + 1) / totalSlides) * 100;
+        progressBar.style.width = progress + '%';
+        slideCounter.textContent = (currentIndex + 1) + ' / ' + totalSlides;
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === totalSlides - 1;
+    }
+
+    function goToSlide(newIndex, direction) {
+        if (isAnimating || newIndex === currentIndex || newIndex < 0 || newIndex >= totalSlides) return;
+
+        isAnimating = true;
+
+        const currentSlide = slides[currentIndex];
+        const nextSlide = slides[newIndex];
+        const transitionType = getTransitionType(newIndex);
+
+        // Reset pop animations on the incoming slide
+        resetPopAnimations(nextSlide);
+
+        currentSlide.classList.remove('active');
+        nextSlide.classList.add('active');
+
+        if (direction === 'next') {
+            if (transitionType === 'slide') {
+                currentSlide.classList.add('transition-slide-out-left');
+                nextSlide.classList.add('transition-slide-in-right');
+            } else {
+                currentSlide.classList.add('transition-zoom-out');
+                nextSlide.classList.add('transition-zoom-in');
+            }
+        } else {
+            if (transitionType === 'slide') {
+                currentSlide.classList.add('transition-slide-out-right');
+                nextSlide.classList.add('transition-slide-in-left');
+            } else {
+                currentSlide.classList.add('transition-zoom-out');
+                nextSlide.classList.add('transition-zoom-in');
+            }
+        }
+
+        const cleanup = () => {
+            currentSlide.classList.remove(
+                'transition-slide-out-left',
+                'transition-slide-out-right',
+                'transition-zoom-out'
+            );
+            nextSlide.classList.remove(
+                'transition-slide-in-right',
+                'transition-slide-in-left',
+                'transition-zoom-in'
+            );
+            isAnimating = false;
+        };
+
+        requestAnimationFrame(() => {
+            nextSlide.addEventListener('animationend', cleanup, { once: true });
+        });
+
+        setTimeout(cleanup, 600);
+
+        currentIndex = newIndex;
+        updateUI();
+    }
+
+    function nextSlide() {
+        goToSlide(currentIndex + 1, 'next');
+    }
+
+    function prevSlide() {
+        goToSlide(currentIndex - 1, 'prev');
+    }
+
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+            e.preventDefault();
+            nextSlide();
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            prevSlide();
+        } else if (e.key === 'Home') {
+            e.preventDefault();
+            goToSlide(0, 'prev');
+        } else if (e.key === 'End') {
+            e.preventDefault();
+            goToSlide(totalSlides - 1, 'next');
+        }
+    });
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    document.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    document.addEventListener('touchend', function(e) {
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        const diffX = touchStartX - touchEndX;
+        const diffY = touchStartY - touchEndY;
+
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+            if (diffX > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }
+    }, { passive: true });
+
+    // Trigger pop animations on the initial active slide
+    resetPopAnimations(slides[0]);
+
+    updateUI();
+})();
+</script>
 
 </body>
 </html>
