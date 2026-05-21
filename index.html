@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benteveo App - Presentación Premium Final</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+/* 1. CONFIGURACIÓN GENERAL REFINADA */
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0;
+}
+
+body {
+  background-color: #0f172a; /* Fondo exterior oscuro */
+  display: grid;
+  gap: 40px;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+  padding: 60px 0;
+  place-items: center;
+}
+
+.slide-container {
+  width: 1280px;
+  height: 720px;
+  background-color: #fdfbf7; /* Crema Premium */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  padding: 60px 80px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+}
+
+/* DECORACIONES MODERNAS */
+.slide-container::before {
+  content: '';
+  position: absolute;
+  top: -10%; right: -10%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255, 208, 0, 0.15) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.slide-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 8px;
+  background: linear-gradient(90deg, #004687 0%, #FFD000 100%);
+  z-index: 2;
+}
+
+h1, h2, h3 { 
+  font-family: 'Playfair Display', serif; 
+  color: #004687; 
+  margin-bottom: 10px;
+}
+
+p, li, td, th { 
+  color: #2d3748; 
+  font-size: 19px; 
+  line-height: 1.6;
+}
+
+.slide-title {
+  font-size: 46px;
+  font-weight: 800;
+  margin-bottom: 45px;
+  color: #004687;
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+.slide-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 80px;
+  height: 6px;
+  background-color: #FFD000;
+  border-radius: 4px;
+}
+
+.content-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  z-index: 1;
+}
+
+.title-layout { text-align: center; justify-content: center; align-items: center; }
+.logo-main { 
+  height: 280px; 
+  margin-bottom: 25px; 
+  object-fit: contain;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+}
+
+.accent-badge {
+  background: #FFD000;
+  color: #004687;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.two-column { 
+  display: grid; 
+  grid-template-columns: 1.1fr 0.9fr; 
+  gap: 50px; 
+  align-items: center; 
+}
+
+.tile { 
+  background: #ffffff; 
+  padding: 35px; 
+  border-radius: 12px; 
+  box-shadow: 0 10px 25px rgba(0,70,135,0.05);
+  border-top: 5px solid #004687;
+  transition: transform 0.3s ease;
+}
+
+.tile i { 
+  font-size: 42px; 
+  color: #FFD000; 
+  margin-bottom: 20px;
+  background: #004687;
+  width: 70px; height: 70px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.image-wrapper { 
+  border-radius: 12px; 
+  overflow: hidden; 
+  height: 420px; 
+  border: 4px solid #fff; 
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12); 
+}
+.image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ML UI STYLE */
+.ml-ui { 
+  background: #f5f5f5; 
+  border-radius: 16px; 
+  width: 100%; 
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+.ml-header { 
+  background: #FFD000; 
+  padding: 20px 30px; 
+  display: flex; 
+  align-items: center; 
+  gap: 20px; 
+}
+.ml-search { 
+  background: white; 
+  flex-grow: 1; 
+  padding: 12px 20px; 
+  border-radius: 8px; 
+  color: #718096; 
+  display: flex;
+  justify-content: space-between;
+}
+.ml-product-grid { 
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 25px; 
+  padding: 30px;
+  background: #fff;
+}
+.ml-card { 
+  border: 1px solid #e2e8f0; 
+  border-radius: 12px; 
+  padding: 20px; 
+  background: white;
+}
+.ml-price { 
+  font-size: 26px; 
+  font-weight: 700; 
+  color: #1a202c; 
+}
+.ml-detail { 
+  font-size: 14px; 
+  color: #00a650; 
+  font-weight: 700; 
+}
+
+.chatbot {
+  position: absolute; 
+  bottom: 45px; 
+  right: 50px; 
+  background: linear-gradient(135deg, #004687 0%, #002b54 100%); 
+  color: white;
+  padding: 18px 28px; 
+  border-radius: 30px 30px 4px 30px; 
+  display: flex; 
+  align-items: center; 
+  gap: 12px;
+  font-weight: 500;
+  border: 2px solid rgba(255, 208, 0, 0.4);
+}
+
+/* TABLAS */
+.table-layout table { 
+  border-collapse: separate; 
+  border-spacing: 0 10px;
+  width: 100%; 
+}
+.table-layout th { 
+  background-color: #004687; 
+  color: #fff; 
+  padding: 18px; 
+  text-align: left;
+  border-radius: 8px;
+}
+.table-layout td { 
+  background: #fff;
+  padding: 16px 20px; 
+}
+.id-badge { 
+  background: #FFD000; 
+  color: #004687; 
+  font-weight: 700; 
+  padding: 6px 14px; 
+  border-radius: 6px; 
+}
+    </style>
+</head>
+<body>
+
+<div class="slide-container" id="slide1">
+    <div class="content-area title-layout">
+        <img src="logo.jpeg" class="logo-main" alt="Logo Benteveo">
+        <span class="accent-badge">Plataforma P2P Líder</span>
+        <h1 style="font-size: 64px; font-weight: 800;">Benteveo</h1>
+        <p class="subtitle" style="font-size: 38px; font-weight: 700; color: #FFD000; font-family: 'Playfair Display', serif;">"Te hace la gauchada"</p>
+        <p style="margin-top: 35px; font-size: 22px; color: #4a5568;">Estrategia de Mercado y Operaciones 2026</p>
+    </div>
+</div>
+
+<div class="slide-container" id="slide2">
+    <h2 class="slide-title">Visión y Propósito Estratégico</h2>
+    <div class="content-area">
+        <div class="tile" style="width: 100%; text-align: center; border-left: 12px solid #FFD000;">
+            <p style="font-size: 34px; font-family: 'Playfair Display', serif; color: #004687; font-weight: 700;">"Gente común alquilando cosas comunes a gente cercana."</p>
+        </div>
+        <div class="two-column" style="grid-template-columns: 1fr 1fr; margin-top: 30px;">
+            <div class="tile">
+                <h3><i class="fa-solid fa-recycle"></i> Economía Circular</h3>
+                <p>Reducimos la necesidad de propiedad compartiendo recursos.</p>
+            </div>
+            <div class="tile">
+                <h3><i class="fa-solid fa-users-rays"></i> Resiliencia Barrial</h3>
+                <p>Monetización segura del capital dormido de cada vecino.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide3">
+    <h2 class="slide-title">El Problema: Capital Dormido</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="image-wrapper">
+                <img src="garage.jpg" alt="Garage con herramientas">
+            </div>
+            <div>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 30px; display: flex;"><i class="fa-solid fa-circle-xmark" style="color:#e53e3e; margin-right: 15px;"></i><span><strong>Activos Ociosos:</strong> Un taladro se usa solo 13 min en toda su vida.</span></li>
+                    <li style="margin-bottom: 30px; display: flex;"><i class="fa-solid fa-circle-xmark" style="color:#e53e3e; margin-right: 15px;"></i><span><strong>Gasto Ineficiente:</strong> Compras caras para tareas de una sola tarde.</span></li>
+                    <li style="margin-bottom: 30px; display: flex;"><i class="fa-solid fa-circle-xmark" style="color:#e53e3e; margin-right: 15px;"></i><span><strong>Desorden Urbano:</strong> Acumulación que quita espacio vital.</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide4">
+    <h2 class="slide-title">La Gauchada Digital</h2>
+    <div class="content-area">
+        <div class="two-column" style="grid-template-columns: 0.9fr 1.1fr;">
+            <div>
+                <h3 style="font-size: 28px;">Marketplace P2P Hiperlocal</h3>
+                <p style="margin-bottom: 20px;">Automatizamos publicaciones, reservas dinámicas y pagos seguros con resguardo total.</p>
+                <p style="font-weight: 600; color: #004687;">Ganá dinero extra pasivo o ahorrá alquilando a menos de 10 cuadras.</p>
+            </div>
+            <div class="image-wrapper">
+                <img src="vecinos.jpg" alt="Vecinos colaborando">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide5">
+    <h2 class="slide-title">¿A quién está destinado?</h2>
+    <div class="content-area">
+        <div class="two-column" style="grid-template-columns: 1fr 1fr;">
+            <div class="tile" style="border-top-color: #FFD000;">
+                <h3><i class="fa-solid fa-user-gear"></i> El Inquilino</h3>
+                <p>Estudiantes o profesionales que necesitan solucionar una necesidad puntual sin comprar el bien.</p>
+            </div>
+            <div class="tile">
+                <h3><i class="fa-solid fa-house-laptop"></i> El Dueño</h3>
+                <p>Vecinos con herramientas que buscan un flujo constante de ingresos extra de forma segura.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide6">
+    <h2 class="slide-title">Confianza Activa y Seguridad</h2>
+    <div class="content-area">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+            <div class="tile">
+                <i class="fa-solid fa-user-shield"></i>
+                <h3>Validación KYC</h3>
+                <p>Verificación estricta de identidad para asegurar vecinos reales.</p>
+            </div>
+            <div class="tile" style="border-top-color: #FFD000;">
+                <i class="fa-solid fa-vault"></i>
+                <h3>Garantía</h3>
+                <p>Retención preventiva que resguarda el valor del activo.</p>
+            </div>
+            <div class="tile">
+                <i class="fa-solid fa-ranking-star"></i>
+                <h3>Reputación</h3>
+                <p>Sistema de puntuación bidireccional por cada alquiler.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide7">
+    <h2 class="slide-title">Logística (Radio 10 Cuadras)</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop" alt="Mapa">
+            </div>
+            <div>
+                <h3>Intercambios a Pie</h3>
+                <p>Sin costos de flete. El vecino te entrega el objeto a la vuelta de casa.</p>
+                <p style="margin-top: 20px; font-weight: 600; color: #004687;">Nodos: Palermo, Almagro, Caballito, Quilmes y Varela.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide8">
+    <h2 class="slide-title">Interfaz y Experiencia UX</h2>
+    <div class="content-area">
+        <div class="ml-ui">
+            <div class="ml-header">
+                <div style="background: white; border-radius: 8px; padding: 4px; width: 50px; height: 50px; display: grid; place-items: center;">
+                    <img src="logo.jpeg" style="width: 100%; object-fit: contain;">
+                </div>
+                <div class="ml-search">
+                    <span>Buscar taladros, carpas...</span>
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+            </div>
+            <div class="ml-product-grid">
+                <div class="ml-card">
+                    <div style="height: 110px; background: #f7fafc; display: grid; place-items: center;"><i class="fa-solid fa-hammer" style="font-size: 38px; color: #004687;"></i></div>
+                    <p class="ml-price">$4.500</p>
+                    <p class="ml-detail">Palermo • Hoy</p>
+                    <p>Rotomartillo Industrial</p>
+                </div>
+                <div class="ml-card">
+                    <div style="height: 110px; background: #f7fafc; display: grid; place-items: center;"><i class="fa-solid fa-campground" style="font-size: 38px; color: #004687;"></i></div>
+                    <p class="ml-price">$12.000</p>
+                    <p class="ml-detail">⭐ Destacado</p>
+                    <p>Carpa Térmica 4P</p>
+                </div>
+                <div class="ml-card">
+                    <div style="height: 110px; background: #f7fafc; display: grid; place-items: center;"><i class="fa-solid fa-camera" style="font-size: 38px; color: #004687;"></i></div>
+                    <p class="ml-price">$8.500</p>
+                    <p class="ml-detail">A 300 metros</p>
+                    <p>Cámara Réflex</p>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot">
+            <i class="fa-solid fa-comment-dots"></i>
+            <span>¡Hola! Soy Benti. ¿Buscás una gauchada?</span>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide9">
+    <h2 class="slide-title">Funcionalidades del Ecosistema</h2>
+    <div class="content-area">
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px;">
+            <div class="tile"><h4><i class="fa-solid fa-clock-rotate-left"></i> Reservas</h4><p>Calendario inteligente en tiempo real.</p></div>
+            <div class="tile" style="border-top-color: #FFD000;"><h4><i class="fa-solid fa-credit-card"></i> Pagos</h4><p>Integración total con Mercado Pago.</p></div>
+            <div class="tile" style="border-top-color: #FFD000;"><h4><i class="fa-solid fa-feather-pointed"></i> Publicación</h4><p>Carga ágil en solo 3 pasos.</p></div>
+            <div class="tile"><h4><i class="fa-solid fa-headset"></i> Soporte IA</h4><p>Asistente inteligente para disputas.</p></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide10">
+    <h2 class="slide-title">Despliegue Estratégico de Nodos</h2>
+    <div class="content-area">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+            <div class="tile"><span class="id-badge">Fase 1</span><h3>CABA Core</h3><p>Almagro, Palermo, Caballito.</p></div>
+            <div class="tile" style="border-top-color: #FFD000;"><span class="id-badge">Fase 2</span><h3>GBA Sur A</h3><p>Quilmes Centro.</p></div>
+            <div class="tile"><span class="id-badge">Fase 2</span><h3>GBA Sur B</h3><p>Varela Centro.</p></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide11">
+    <h2 class="slide-title">Administración (Miembros 1-6)</h2>
+    <div class="content-area">
+        <div class="table-layout">
+            <table>
+                <thead><tr><th>ID</th><th>Integrante</th><th>Responsabilidad</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="id-badge">01</span></td><td>Lucia</td><td>Gestión de Pagos e IA</td></tr>
+                    <tr><td><span class="id-badge">02</span></td><td>Ed</td><td>Desarrollo Frontend</td></tr>
+                    <tr><td><span class="id-badge">03</span></td><td>Euge</td><td>UX y Marca</td></tr>
+                    <tr><td><span class="id-badge">04</span></td><td>Kevin</td><td>Arquitectura Mobile</td></tr>
+                    <tr><td><span class="id-badge">05</span></td><td>Cami</td><td>Producto y Marketing</td></tr>
+                    <tr><td><span class="id-badge">06</span></td><td>Abraham</td><td>Infraestructura Cloud</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide12">
+    <h2 class="slide-title">Administración (Miembros 7-12)</h2>
+    <div class="content-area">
+        <div class="table-layout">
+            <table>
+                <thead><tr><th>ID</th><th>Integrante</th><th>Responsabilidad</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="id-badge">07</span></td><td>Esteban</td><td>Liderazgo Técnico (Back)</td></tr>
+                    <tr><td><span class="id-badge">08</span></td><td>Pedro</td><td>QA y Testing</td></tr>
+                    <tr><td><span class="id-badge">09</span></td><td>Rocio C.</td><td>Innovación e IA Support</td></tr>
+                    <tr><td><span class="id-badge">10</span></td><td>Rocio V.</td><td>Administración DB</td></tr>
+                    <tr><td><span class="id-badge">11</span></td><td>Rocio V.</td><td>Seguridad y Consultas</td></tr>
+                    <tr><td><span class="id-badge">12</span></td><td>Esteban</td><td>Ciberseguridad y Sprints</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide13" style="background: linear-gradient(135deg, #004687 0%, #002244 100%); text-align: center;">
+    <div class="content-area">
+        <div style="background: white; border-radius: 50%; width: 200px; height: 200px; display: grid; place-items: center; margin: 0 auto 35px auto; padding: 25px; border: 8px solid #FFD000;">
+            <img src="logo.jpeg" style="width: 100%; object-fit: contain;">
+        </div>
+        <h2 style="color: #FFD000; font-size: 56px;">¿Dudas?</h2>
+        <p style="color: #fff; font-size: 26px;">Benteveo: Entre vecinos nos entendemos.</p>
+        <div style="margin-top: 50px; background: rgba(255, 255, 255, 0.1); padding: 15px 40px; border-radius: 50px; border: 1px solid #FFD000;">
+            <p style="color: #FFD000; font-weight: 700;">www.benteveo.app</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
